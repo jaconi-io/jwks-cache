@@ -15,7 +15,7 @@ First, build the Micronaut test application using gradle:
 Then, run `docker compose`:
 
 ```shell
-docker compose up
+docker compose up --detach
 ```
 
 Get an access token from [dex](https://dexidp.io):
@@ -23,6 +23,8 @@ Get an access token from [dex](https://dexidp.io):
 ```shell
 token=$(./access_token.php)
 ```
+
+Make sure to grant access in your browser.
 
 Request to the application:
 
@@ -44,4 +46,18 @@ Request to the application again:
 curl --write-out '%{http_code}' --header "Authorization: Bearer $token" http://localhost:8080/test
 ```
 
-It will return a 401.
+It will still return a 204.
+
+Perform a request with an invalid token:
+
+```shell
+curl --write-out '%{http_code}' --header "Authorization: Bearer $(echo $token | sed 's/.$//')" http://localhost:8080/test
+```
+
+Perform another request with a valid token:
+
+```shell
+curl --write-out '%{http_code}' --header "Authorization: Bearer $token" http://localhost:8080/test
+```
+
+A 401 will be returned.
