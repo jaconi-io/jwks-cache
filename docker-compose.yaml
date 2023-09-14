@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  dex:
+    image: ghcr.io/dexidp/dex:latest
+    ports:
+      - 5556:5556
+    volumes:
+      - type: bind
+        source: ./dex.yaml
+        target: /etc/dex/config.docker.yaml
+
+  micronaut-test:
+    image: micronaut-test:latest
+    ports:
+      - 8080:8080

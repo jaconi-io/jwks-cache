@@ -1,0 +1,11 @@
+micronaut:
+  application:
+    name: micronaut-test
+
+  security:
+    token:
+      jwt:
+        signatures:
+          jwks:
+            dex:
+              url: http://dex:5556/dex/keys
