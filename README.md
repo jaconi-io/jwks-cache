@@ -1,2 +1,3 @@
 # jwks-cache
-Cache JWKS from an Identity Provider
+
+Cache JWKS downloaded from an identity provider (such as Keycloak).
