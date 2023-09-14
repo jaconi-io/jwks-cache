@@ -1,0 +1,80 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      - name: Lint commit message(s)
+        run: |
+          yarn add @commitlint/cli
+          yarn add @commitlint/config-conventional
+          yarn run commitlint --from HEAD~${{ github.event.pull_request.commits }}
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v2
+      - uses: docker/build-push-action@v4
+        with:
+          tags: ghcr.io/${{ github.repository }}:latest
+      - uses: actions/setup-go@v4
+        with:
+          go-version: "1.21"
+      - name: Test
+        run: go test ./...
+
+  release:
+    if: github.event_name == 'push'
+    needs: test
+    outputs:
+      next-release-version: ${{ steps.semantic-release.outputs.next-release-version }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      - id: semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          yarn add semantic-release
+          yarn add @semantic-release/exec
+          yarn run semantic-release
+
+  publish:
+    if: needs.release.outputs.next-release-version != ''
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v4
+        with:
+          platforms: linux/amd64, linux/arm64
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:${{ needs.release.outputs.next-release-version }}
+            ghcr.io/${{ github.repository }}:latest
