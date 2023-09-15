@@ -1,0 +1,26 @@
+spring:
+  main:
+    banner-mode: off
+
+management:
+  endpoint:
+    health:
+      probes:
+        # Expose Kubernetes probes as /livez and /readyz on the application port. See
+        # https://docs.spring.io/spring-boot/docs/3.1.3/reference/html/actuator.html#actuator.endpoints.kubernetes-probes
+        add-additional-paths: true
+        enabled: true
+
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - prometheus
+
+  server:
+    port: 8081
+
+jaconi:
+  jwks:
+    urls: []

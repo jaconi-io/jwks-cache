@@ -1,5 +1,12 @@
 version: "3.8"
 services:
+  jwks-cache:
+    image: ghcr.io/jaconi-io/jwks-cache:latest
+    volumes:
+      - type: bind
+        source: ./jwks-cache.yaml
+        target: /etc/dex/config.docker.yaml
+
   dex:
     image: ghcr.io/dexidp/dex:latest
     ports:

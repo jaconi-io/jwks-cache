@@ -8,4 +8,4 @@ micronaut:
         signatures:
           jwks:
             dex:
-              url: http://dex:5556/dex/keys
+              url: http://jwks-cache:8080/.well-known/jwks.json

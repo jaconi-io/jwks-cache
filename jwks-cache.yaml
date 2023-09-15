@@ -1,0 +1,4 @@
+jaconi:
+  jwks:
+    urls:
+      - http://dex:5556/dex/keys

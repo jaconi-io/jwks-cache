@@ -6,9 +6,10 @@ Cache JWKS downloaded from an identity provider (such as Keycloak).
 
 We use [Docker Compose](https://docs.docker.com/compose/) to create a test environment.
 
-First, build the Micronaut test application using gradle:
+First, build the applications using gradle:
 
 ```shell
+./gradlew bootBuildImage
 ./micronaut-test/gradlew --project-dir micronaut-test dockerBuild
 ```
 
@@ -60,4 +61,4 @@ Perform another request with a valid token:
 curl --write-out '%{http_code}' --header "Authorization: Bearer $token" http://localhost:8080/test
 ```
 
-A 401 will be returned.
+A 204 will be returned (without jwks-cache a 401 would have been returned).
