@@ -9,8 +9,7 @@ We use [Docker Compose](https://docs.docker.com/compose/) to create a test envir
 First, build the applications using gradle:
 
 ```shell
-./gradlew bootBuildImage
-./micronaut-test/gradlew --project-dir micronaut-test dockerBuild
+./gradlew bootBuildImage micronaut-test:dockerBuild
 ```
 
 Then, run `docker compose`:
