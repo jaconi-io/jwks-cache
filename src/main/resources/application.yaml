@@ -24,3 +24,7 @@ management:
 jaconi:
   jwks:
     urls: []
+
+logging:
+  level:
+    root: INFO
