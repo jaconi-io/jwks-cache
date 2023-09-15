@@ -6,8 +6,8 @@ Cache JWKS downloaded from an identity provider (such as Keycloak).
 
 ### Kubernetes Probes
 
-A liveness endpoint is available at [:8080/livez](http//localhost:8080/livez). A readiness endpoint is available at
-[:8080/readyz](http//localhost:8080/readyz).
+A liveness endpoint is available at [:8080/livez](http://localhost:8080/livez). A readiness endpoint is available at
+[:8080/readyz](http://localhost:8080/readyz).
 
 ### Logging
 
@@ -16,7 +16,7 @@ JSON logging can be enabled by using the Spring profile `json-logging`. See [Add
 ### Metrics
 
 [Prometheus][2] metrics are exposed at
-[:8081/actuator/prometheus](http//localhost:8081/actuator/prometheus) by default.
+[:8081/actuator/prometheus](http://localhost:8081/actuator/prometheus) by default.
 
 ## Testing
 
