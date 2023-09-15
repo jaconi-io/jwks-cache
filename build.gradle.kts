@@ -13,7 +13,7 @@ dependencies {
 
 	compileOnly("org.projectlombok:lombok")
 
-	implementation("com.nimbusds:nimbus-jose-jwt:9.32")
+	implementation("com.nimbusds:nimbus-jose-jwt:9.34")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 
