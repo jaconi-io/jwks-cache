@@ -15,6 +15,7 @@ dependencies {
 
 	implementation("com.nimbusds:nimbus-jose-jwt:9.34")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 
 	runtimeOnly("io.micrometer:micrometer-registry-prometheus")

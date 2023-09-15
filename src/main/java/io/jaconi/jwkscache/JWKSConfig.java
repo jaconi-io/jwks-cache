@@ -10,6 +10,9 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.jwk.source.JWKSourceBuilder;
 import com.nimbusds.jose.proc.SecurityContext;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Configuration
 public class JWKSConfig {
 
@@ -19,6 +22,7 @@ public class JWKSConfig {
 	}
 
 	private JWKSource<SecurityContext> jwkSource(URL url) {
+		log.info("caching JWKS for endpoint {}", url);
 		return JWKSourceBuilder.create(url)
 				.retrying(true)
 				// Handle outages of the JWKS source for up to 50 Minutes (default).
