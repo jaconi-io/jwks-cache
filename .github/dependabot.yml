@@ -1,20 +1,14 @@
 version: 2
 updates:
-  - package-ecosystem: docker
-    directory: "/"
-    schedule:
-      interval: weekly
-    commit-message:
-      prefix: "build(docker)"
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
       interval: weekly
     commit-message:
       prefix: "ci"
-  - package-ecosystem: gomod
+  - package-ecosystem: gradle
     directory: "/"
     schedule:
       interval: weekly
     commit-message:
-      prefix: "build(go)"
+      prefix: "build(java)"
