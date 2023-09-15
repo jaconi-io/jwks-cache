@@ -24,6 +24,7 @@ public class JWKSConfig {
 	private JWKSource<SecurityContext> jwkSource(URL url) {
 		log.info("caching JWKS for endpoint {}", url);
 		return JWKSourceBuilder.create(url)
+				.healthReporting(new URLAwareHealthReportListener(url))
 				.retrying(true)
 				// Handle outages of the JWKS source for up to 50 Minutes (default).
 				.outageTolerant(true)
