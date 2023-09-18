@@ -15,8 +15,11 @@ JSON logging can be enabled by using the Spring profile `json-logging`. See [Add
 
 ### Metrics
 
-[Prometheus][2] metrics are exposed at
-[:8081/actuator/prometheus](http://localhost:8081/actuator/prometheus) by default.
+[Prometheus][2] metrics are exposed at [:8081/actuator/prometheus](http://localhost:8081/actuator/prometheus) by
+default.
+
+A custom metric is available to monitor the JWKS endpoints: `jwks_cache_endpoints`. The value is `0` for unhealthy, and
+`1` for healthy endpoints. The endpoints URL is in the `url` tag.
 
 ## Testing
 
