@@ -29,13 +29,13 @@ public class WellKnownController {
 
 	@ResponseBody
 	@GetMapping("/.well-known/jwks.json")
-	public Mono<Map<String, Object>> jwksJSON() {
+	public Mono<Map<String, List<Map<String, Object>>>> jwksJSON() {
 		return Flux.fromIterable(jwkSources)
 				.flatMapIterable(src -> {
 					try {
 						return src.get(SELECTOR, null);
 					} catch (KeySourceException e) {
-						log.error("error retrieving JWKS", e);
+						// Just fall back to an empty list. Health reporting will take care of logging.
 						return Collections.emptyList();
 					}
 				})
