@@ -4,6 +4,7 @@ services:
     image: ghcr.io/jaconi-io/jwks-cache:latest
     ports:
       - 8090:8080
+      - 8091:8081
     volumes:
       - type: bind
         source: ./jwks-cache.yaml

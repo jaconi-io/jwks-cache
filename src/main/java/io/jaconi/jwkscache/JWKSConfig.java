@@ -10,11 +10,14 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.jwk.source.JWKSourceBuilder;
 import com.nimbusds.jose.proc.SecurityContext;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Configuration
+@RequiredArgsConstructor
 public class JWKSConfig {
+	private final HealthReportListenerFactory healthReportListenerFactory;
 
 	@Bean
 	public List<JWKSource<SecurityContext>> jwkSetSource(JWKSProperties jwksProperties) {
@@ -24,7 +27,7 @@ public class JWKSConfig {
 	private JWKSource<SecurityContext> jwkSource(URL url) {
 		log.info("caching JWKS for endpoint {}", url);
 		return JWKSourceBuilder.create(url)
-				.healthReporting(new URLAwareHealthReportListener(url))
+				.healthReporting(healthReportListenerFactory.create(url))
 				.retrying(true)
 				// Handle outages of the JWKS source for up to 50 Minutes (default).
 				.outageTolerant(true)
