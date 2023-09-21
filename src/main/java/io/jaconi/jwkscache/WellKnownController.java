@@ -1,6 +1,5 @@
 package io.jaconi.jwkscache;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -31,12 +30,12 @@ public class WellKnownController {
 	@GetMapping("/.well-known/jwks.json")
 	public Mono<Map<String, List<Map<String, Object>>>> jwksJSON() {
 		return Flux.fromIterable(jwkSources)
-				.flatMapIterable(src -> {
+				.flatMap(src -> {
 					try {
-						return src.get(SELECTOR, null);
+						return Flux.fromIterable(src.get(SELECTOR, null));
 					} catch (KeySourceException e) {
 						// Just fall back to an empty list. Health reporting will take care of logging.
-						return Collections.emptyList();
+						return Flux.empty();
 					}
 				})
 				.map(JWK::toJSONObject)
