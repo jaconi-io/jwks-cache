@@ -32,10 +32,6 @@ repositories {
 	mavenCentral()
 }
 
-tasks.bootBuildImage {
-	imageName = "ghcr.io/jaconi-io/${project.name}"
-}
-
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
