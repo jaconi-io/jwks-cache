@@ -5,8 +5,8 @@ Cache [JSON Web Key Sets (JWKSs)][1] downloaded from an identity provider (such 
 ## Motivation
 
 JWKSs allow services to validate JSON Web Tokens (JWTs) without making requests to the issuer of the token. Only the
-JWKS must be available. However, if the service restarts, or a token is rotated, the service must contact the issuer
-again to retrieve the JWKS. If the issuer is unavailable, the service cannot validate tokens.
+JWKS must be available. However, if the service restarts, or a key is rotated, the service must contact the issuer again
+to retrieve the JWKS. If the issuer is unavailable, the service cannot validate tokens.
 
 The problem is made worse by naive implementations of the JWKS retrieval mechanism present in many frameworks.
 
