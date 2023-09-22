@@ -1,5 +1,7 @@
 package io.jaconi.jwkscache;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -16,8 +18,6 @@ import com.nimbusds.jose.proc.SecurityContext;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 @Slf4j
 @RestController
@@ -28,18 +28,19 @@ public class WellKnownController {
 
 	@ResponseBody
 	@GetMapping("/.well-known/jwks.json")
-	public Mono<Map<String, List<Map<String, Object>>>> jwksJSON() {
-		return Flux.fromIterable(jwkSources)
-				.flatMap(src -> {
+	public Map<String, List<Map<String, Object>>> jwksJSON() {
+		var keys = jwkSources.stream()
+				.map(src -> {
 					try {
-						return Flux.fromIterable(src.get(SELECTOR, null));
+						return src.get(SELECTOR, null);
 					} catch (KeySourceException e) {
 						// Just fall back to an empty list. Health reporting will take care of logging.
-						return Flux.empty();
+						return Collections.<JWK>emptyList();
 					}
 				})
+				.flatMap(Collection::stream)
 				.map(JWK::toJSONObject)
-				.collectList()
-				.map(keys -> Map.of("keys", keys));
+				.toList();
+		return Map.of("keys", keys);
 	}
 }
