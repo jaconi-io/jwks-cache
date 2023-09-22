@@ -23,6 +23,10 @@ management:
 
 jaconi:
   jwks:
+    persistence:
+      file:
+        enabled: false
+        path: /var/cache/jwks-cache
     urls: []
 
 logging:
