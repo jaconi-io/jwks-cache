@@ -1,27 +1,20 @@
 FROM container-registry.oracle.com/graalvm/native-image:17-ol9 AS builder
 
-# Make sure xargs is available
-RUN microdnf install --nodocs -y \
-    findutils \
+# Make sure xargs is available to gradle.
+RUN microdnf install --assumeyes --nodocs findutils \
  && microdnf clean all \
  && rm -rf /var/cache/yum
 
-WORKDIR /build
+COPY . .
 
-# Copy the source code into the image for building
-COPY . /build
-
-# Build
 RUN ./gradlew nativeCompile
 
-# The deployment Image
+# The deployment Image.
 FROM container-registry.oracle.com/os/oraclelinux:9-slim
 
 EXPOSE 8080
 EXPOSE 8081
 
-WORKDIR /workspace
-
-# Copy the native executable into the container
-COPY --from=builder /build/build/native/nativeCompile .
-ENTRYPOINT ["/workspace/jwks-cache"]
+# Copy the native executable into the image.
+COPY --from=builder /app/build/native/nativeCompile .
+ENTRYPOINT ["/jwks-cache"]
