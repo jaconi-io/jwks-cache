@@ -36,6 +36,22 @@ tasks.bootBuildImage {
 	imageName = "ghcr.io/jaconi-io/${project.name}"
 }
 
+tasks.bootBuildImage {
+	imageName = "ghcr.io/jaconi-io/${project.name}"
+}
+
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+graalvmNative {
+	binaries {
+		names.forEach { binaryName ->
+			named(binaryName){
+				if (!setOf("x86_64", "amd64").contains(System.getProperty("os.arch"))) {
+					buildArgs.add("-Ob")
+				}
+			}
+		}
+	}
 }

@@ -20,8 +20,6 @@ import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
-import reactor.test.StepVerifier;
-
 @ExtendWith(MockitoExtension.class)
 class WellKnownControllerTest {
 
@@ -52,11 +50,11 @@ class WellKnownControllerTest {
 
 		var controller = new WellKnownController(List.of(source1, source2));
 
-		StepVerifier.create(controller.jwksJSON())
-				.assertNext(res -> assertThat(res).containsExactly(entry("keys", List.of(
+		assertThat(controller.jwksJSON())
+				.containsExactly(entry("keys", List.of(
 						Map.of("kty", "RSA", "kid", "1"),
 						Map.of("kty", "RSA", "kid", "2")
-				))))
-				.verifyComplete();
+				)));
+
 	}
 }
