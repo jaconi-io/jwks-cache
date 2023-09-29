@@ -1,4 +1,4 @@
-FROM bellsoft/liberica-native-image-kit-container:jdk-17-nik-22-musl AS builder
+FROM bellsoft/liberica-native-image-kit-container:jdk-21-nik-23-musl AS builder
 
 WORKDIR /build
 
