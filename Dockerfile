@@ -18,4 +18,5 @@ WORKDIR /workspace
 
 # Copy the native executable into the container
 COPY --from=builder /build/build/native/nativeCompile .
+USER nobody
 ENTRYPOINT ["/workspace/jwks-cache"]
