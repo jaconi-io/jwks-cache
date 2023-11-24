@@ -1,5 +1,13 @@
 # jwks-cache
 
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/jaconi-io/jwks-cache?label=Image&style=for-the-badge)](https://github.com/jaconi-io/jwks-cache/pkgs/container/jwks-cache)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/jaconi-io/jwks-cache/ci.yaml?branch=main&style=for-the-badge)](https://github.com/jaconi-io/jwks-cache/actions/workflows/ci.yaml)
+[![Codecov](https://img.shields.io/codecov/c/github/jaconi-io/jwks-cache?style=for-the-badge)](https://codecov.io/gh/jaconi-io/jwks-cache)
+
+[![GitHub license](https://img.shields.io/github/license/jaconi-io/jwks-cache?style=for-the-badge)](https://github.com/jaconi-io/jwks-cache/blob/main/LICENSE.md)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white&style=for-the-badge)](https://conventionalcommits.org)
+[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release&style=for-the-badge)](https://github.com/semantic-release/semantic-release)
+
 Cache [JSON Web Key Sets (JWKSs)][1] downloaded from an identity provider (such as Keycloak).
 
 ## Motivation
