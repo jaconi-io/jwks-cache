@@ -18,7 +18,7 @@ like:
 * Retrial
 * Outage tolerance
 
-Additional to these features, we offer persistence of cached JWKSs to ensure a service safely can restart, even if the
+Additional to these features, we offer persistence of cached JWKSs to ensure a service can safely restart, even if the
 issuer is unavailable.
 
 ## Configuration
@@ -26,11 +26,11 @@ issuer is unavailable.
 jwks-cache is a Spring Boot project, so all regular Spring Boot configuration can be applied. Additionally, we provide
 these settings:
 
-| Parameter                       | Default                 | Description                            | Example                                         |
-|---------------------------------|-------------------------|----------------------------------------|-------------------------------------------------|
-| `jaconi.jwks.urls`              | `[]`                    | The JWKS URLs to download and expose   | `["https://example.com/.well-known/jwks.json"]` |
-| `jwks.persistence.file.enabled` | `false`                 | Cache a JWKS as file                   | `true`                                          |
-| `jwks.persistence.file.path`    | `/var/cache/jwks-cache` | The storage location for a cached JWKS | `/mnt/volume/cache`                             |
+| Parameter                              | Default                 | Description                            | Example                                         |
+|----------------------------------------|-------------------------|----------------------------------------|-------------------------------------------------|
+| `jaconi.jwks.urls`                     | `[]`                    | The JWKS URLs to download and expose   | `["https://example.com/.well-known/jwks.json"]` |
+| `jaconi.jwks.persistence.file.enabled` | `false`                 | Cache a JWKS as file                   | `true`                                          |
+| `jaconi.jwks.persistence.file.path`    | `/var/cache/jwks-cache` | The storage location for a cached JWKS | `/mnt/volume/cache`                             |
 
 When configuring consuming services, simply move the existing JWKS URL to `jaconi.jwks.urls` and configure the
 jwks-cache instead: [:8080/.well-known/jwks.json](http://localhost:8080/.well-known/jwks.json).
