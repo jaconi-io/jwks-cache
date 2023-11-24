@@ -1,5 +1,6 @@
 plugins {
 	java
+	jacoco
 	id("org.springframework.boot") version "3.1.5"
 	id("io.spring.dependency-management") version "1.1.4"
 	id("org.graalvm.buildtools.native") version "0.9.28"
@@ -34,6 +35,12 @@ repositories {
 
 tasks.bootBuildImage {
 	imageName = "ghcr.io/jaconi-io/${project.name}"
+}
+
+tasks.jacocoTestReport {
+	reports {
+		xml.required = true
+	}
 }
 
 tasks.withType<Test> {

@@ -35,7 +35,12 @@ jobs:
           java-version: 17
       - uses: gradle/gradle-build-action@v2
         with:
-          arguments: check
+          arguments: check jacocoTestReport
+      - uses: codecov/codecov-action@v3
+        if: always() # always run even if the previous step fails
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: build/reports/jacoco/test/jacocoTestReport.xml
 
   release:
     if: github.event_name == 'push'
