@@ -54,21 +54,6 @@ default.
 A custom metric is available to monitor the JWKS endpoints: `jwks_cache_endpoints`. The value is `0` for unhealthy, and
 `1` for healthy endpoints. The endpoints URL is in the `url` tag.
 
-## Native Image
-
-As long as GitHub does not provide ARM runners we manually build our multi-arch images on an ARM host:
-
-```
-VERSION="2.6.0"
-./gradlew bootBuildImage
-docker tag ghcr.io/jaconi-io/jwks-cache:latest ghcr.io/jaconi-io/jwks-cache:latest-arm
-docker pull ghcr.io/jaconi-io/jwks-cache:$VERSION
-docker buildx imagetools create \
-  --tag ghcr.io/jaconi-io/jwks-cache:2.6.0-multi-arch-test \
-  ghcr.io/jaconi-io/jwks-cache:$VERSION \
-  ghcr.io/jaconi-io/jwks-cache:$VERSION-arm
-```
-
 [1]: <https://datatracker.ietf.org/doc/html/rfc7517#section-5> "RFC 7571"
 [2]: <https://connect2id.com/products/nimbus-jose-jwt> "Nimbus JOSE + JWT"
 [3]: <https://docs.spring.io/spring-boot/docs/3.1.3/reference/html/features.html#features.profiles.adding-active-profiles> "Adding Active Profiles"
