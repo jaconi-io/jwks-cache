@@ -1,38 +1,92 @@
 package io.jaconi.jwkscache.persistence;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockserver.model.HttpRequest.request;
+import static org.mockserver.model.HttpResponse.response;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockserver.integration.ClientAndServer;
+import org.mockserver.junit.jupiter.MockServerExtension;
+import org.mockserver.model.Header;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.util.Resource;
 
+@ExtendWith(MockServerExtension.class)
 class FileResourceRetrieverTest {
-	private static final URL URL;
+	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper().addMixIn(Resource.class, ResourceMixin.class);
+	private final ClientAndServer client;
+	private final URL url;
 
-	static {
-		try {
-			URL = new URL("https://example.com");
-		} catch (MalformedURLException e) {
-			throw new RuntimeException(e);
-		}
+	public FileResourceRetrieverTest(ClientAndServer client) throws MalformedURLException {
+		this.client = client;
+		this.url = new URL("http://localhost:%d".formatted(client.getPort()));
+	}
+
+	@BeforeEach
+	public void setUp() {
+		client.reset();
 	}
 
 	@Test
-	void loadNotExisting() {
-		var retriever = new FileResourceRetriever(new ObjectMapper(), new File("/does/not/exist"));
-		assertThatThrownBy(() -> retriever.load(URL)).isInstanceOf(FileNotFoundException.class);
+	void loadFromMissingFolder() {
+		var retriever = new FileResourceRetriever(OBJECT_MAPPER, new File("/does/not/exist"));
+		assertThatThrownBy(() -> retriever.load(url)).isInstanceOf(FileNotFoundException.class);
 	}
 
 	@Test
-	void storeNotExisting() {
-		var retriever = new FileResourceRetriever(new ObjectMapper(), new File("/does/not/exist"));
-		assertThatThrownBy(() -> retriever.store(URL, new Resource("", null))).isInstanceOf(
+	void storeToMissingFolder() {
+		var retriever = new FileResourceRetriever(OBJECT_MAPPER, new File("/does/not/exist"));
+		assertThatThrownBy(() -> retriever.store(url, new Resource("", null))).isInstanceOf(
 				FileNotFoundException.class);
+	}
+
+	@Test
+	void retrieveFromMissingFolder() throws IOException {
+		client.when(request().withMethod("GET"))
+				.respond(response().withHeader(Header.header("Content-Type", "foo")).withBody("{}"));
+
+		var retriever = new FileResourceRetriever(OBJECT_MAPPER, new File("/does/not/exist"));
+		Resource resource = retriever.retrieveResource(url);
+		assertThat(resource.getContent()).isEqualTo("{}");
+		assertThat(resource.getContentType()).isEqualTo("foo");
+	}
+
+	@Test
+	void retrieve404() {
+		client.when(request().withMethod("GET"))
+				.respond(response().withStatusCode(404));
+
+		var retriever = new FileResourceRetriever(OBJECT_MAPPER, new File("/does/not/exist"));
+		assertThatThrownBy(() -> retriever.retrieveResource(url)).isInstanceOf(IOException.class);
+	}
+
+	@Test
+	void retrieve() throws IOException {
+		client.when(request().withMethod("GET"))
+				.respond(response().withHeader(Header.header("Content-Type", "foo")).withBody("{}"));
+
+		var retriever = new FileResourceRetriever(OBJECT_MAPPER, new File("/tmp"));
+		Resource resource = retriever.retrieveResource(url);
+		assertThat(resource.getContent()).isEqualTo("{}");
+		assertThat(resource.getContentType()).isEqualTo("foo");
+
+		client.reset();
+		client.when(request().withMethod("GET"))
+				.respond(response().withStatusCode(504));
+
+		retriever = new FileResourceRetriever(OBJECT_MAPPER, new File("/tmp"));
+		resource = retriever.retrieveResource(url);
+		assertThat(resource.getContent()).isEqualTo("{}");
+		assertThat(resource.getContentType()).isEqualTo("foo");
 	}
 }
