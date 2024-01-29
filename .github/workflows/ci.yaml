@@ -33,7 +33,7 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-      - uses: gradle/gradle-build-action@v2
+      - uses: gradle/gradle-build-action@v3
         with:
           arguments: check jacocoTestReport
       - uses: codecov/codecov-action@v3
