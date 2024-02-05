@@ -36,7 +36,7 @@ jobs:
       - uses: gradle/gradle-build-action@v3
         with:
           arguments: check jacocoTestReport
-      - uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v4
         if: always() # always run even if the previous step fails
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
