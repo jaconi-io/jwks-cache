@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.nimbusds.jose.jwk.source.JWKSetSourceWithHealthStatusReporting;
-import com.nimbusds.jose.jwk.source.JWKSourceBuilder;
 import com.nimbusds.jose.proc.SecurityContext;
 import com.nimbusds.jose.util.health.HealthReport;
 import com.nimbusds.jose.util.health.HealthStatus;
