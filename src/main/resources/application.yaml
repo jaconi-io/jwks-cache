@@ -1,6 +1,9 @@
 spring:
   main:
     banner-mode: off
+  threads:
+    virtual:
+      enabled: true
 
 management:
   endpoint:
