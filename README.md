@@ -34,15 +34,18 @@ issuer is unavailable.
 jwks-cache is a Spring Boot project, so all regular Spring Boot configuration can be applied. Additionally, we provide
 these settings:
 
-| Parameter                                   | Default                 | Description                            | Example                                         |
-|---------------------------------------------|-------------------------|----------------------------------------|-------------------------------------------------|
-| `jaconi.jwks.urls`                          | `[]`                    | The JWKS URLs to download and expose   | `["https://example.com/.well-known/jwks.json"]` |
-| `jaconi.jwks.caching.enabled`               | `true`                  | Enable caching                         | `true`                                          |                              
-| `jaconi.jwks.caching.time-to-live`          | `5m`                    | TTL for the cache                      | `1m`                                            |                              
-| `jaconi.jwks.persistence.file.enabled`      | `false`                 | Persist a JWKS as file                 | `true`                                          |
-| `jaconi.jwks.persistence.file.path`         | `/var/cache/jwks-cache` | The storage location for a cached JWKS | `/mnt/volume/cache`                             |
-| `jaconi.jwks.outage-tolerance.enabled`      | `true`                  | Enable outage tolerance                | `false`                                         |
-| `jaconi.jwks.outage-tolerance.time-to-live` | `50m`                   | TTL for the outage cache               | `1h`                                            |
+| Parameter                                      | Default                  | Description                               | Example                                         |
+|------------------------------------------------|--------------------------|-------------------------------------------|-------------------------------------------------|
+| `jaconi.jwks.urls`                             | `[]`                     | The JWKS URLs to download and expose      | `["https://example.com/.well-known/jwks.json"]` |
+| `jaconi.jwks.caching.enabled`                  | `true`                   | Enable caching                            | `true`                                          |                              
+| `jaconi.jwks.caching.time-to-live`             | `5m`                     | TTL for the cache                         | `1m`                                            |                              
+| `jaconi.jwks.persistence.file.enabled`         | `false`                  | Persist a JWKS as file                    | `true`                                          |
+| `jaconi.jwks.persistence.file.path`            | `/var/cache/jwks-cache`  | The storage location for a cached JWKS    | `/mnt/volume/cache`                             |
+| `jaconi.jwks.persistence.kubernetes.enabled`   | `false`                  | Persist JWKS's in a Kubernetes Config Map | `true`                                          |
+| `jaconi.jwks.persistence.kubernetes.namespace` | `~` (Pod Namespace)      | The namespace for the ConfigMap           | `jwks-cache`                                    |
+| `jaconi.jwks.persistence.kubernetes.name`      | `jwks-cache-persistence` | The name for the ConfigMap                | `jwks-cache-storage`                            |
+| `jaconi.jwks.outage-tolerance.enabled`         | `true`                   | Enable outage tolerance                   | `false`                                         |
+| `jaconi.jwks.outage-tolerance.time-to-live`    | `50m`                    | TTL for the outage cache                  | `1h`                                            |
 
 When configuring consuming services, simply move the existing JWKS URL to `jaconi.jwks.urls` and configure the
 jwks-cache instead: [:8080/.well-known/jwks.json](http://localhost:8080/.well-known/jwks.json).
