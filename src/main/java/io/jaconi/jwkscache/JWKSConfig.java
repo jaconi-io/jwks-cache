@@ -36,6 +36,7 @@ public class JWKSConfig {
 				.retrying(true)
 				// Handle outages of the JWKS source for up to 50 Minutes (default).
 				.outageTolerant(true)
+				.refreshAheadCache()
 				.build();
 
 		// Warmup cache on startup.
