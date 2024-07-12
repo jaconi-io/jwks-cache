@@ -33,6 +33,10 @@ jaconi:
       file:
         enabled: false
         path: /var/cache/jwks-cache
+      kubernetes:
+        enabled: false
+        namespace: ~ # Defaults to the applications namespace.
+        name: jwks-cache-persistence
     outage-tolerance:
       enabled: true
       time-to-live: 50m
