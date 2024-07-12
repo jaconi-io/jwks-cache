@@ -14,6 +14,12 @@ import com.nimbusds.jose.util.ResourceRetriever;
 @Configuration
 public class PersistenceConfig {
 
+	/**
+	 * Use a {@link DefaultResourceRetriever} if no other {@link ResourceRetriever} (for example,
+	 * {@link FileResourceRetriever} or {@link KubernetesResourceRetriever}) is present.
+	 *
+	 * @return a {@link DefaultResourceRetriever}
+	 */
 	@Bean
 	@SuppressWarnings("unused")
 	@ConditionalOnMissingBean(ResourceRetriever.class)
