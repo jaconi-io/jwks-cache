@@ -15,6 +15,7 @@ dependencies {
 	compileOnly("org.projectlombok:lombok")
 
 	implementation("com.nimbusds:nimbus-jose-jwt:10.6")
+	implementation("io.kubernetes:client-java:24.0.0")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-webmvc")
