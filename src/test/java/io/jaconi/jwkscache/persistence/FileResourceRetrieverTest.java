@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +30,7 @@ class FileResourceRetrieverTest {
 
 	public FileResourceRetrieverTest(ClientAndServer client) throws MalformedURLException {
 		this.client = client;
-		this.url = new URL("http://localhost:%d".formatted(client.getPort()));
+		this.url = URI.create("http://localhost:%d".formatted(client.getPort())).toURL();
 	}
 
 	@BeforeEach
