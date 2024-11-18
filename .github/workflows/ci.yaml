@@ -36,7 +36,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - name: Test
         run: ./gradlew check jacocoTestReport
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v5
         if: always() # always run even if the previous step fails
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
