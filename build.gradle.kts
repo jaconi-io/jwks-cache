@@ -14,7 +14,7 @@ dependencies {
 
 	compileOnly("org.projectlombok:lombok")
 
-	implementation("com.nimbusds:nimbus-jose-jwt:9.48")
+	implementation("com.nimbusds:nimbus-jose-jwt:10.0.1")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-web")
