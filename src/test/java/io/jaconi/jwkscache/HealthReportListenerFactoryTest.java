@@ -3,6 +3,7 @@ package io.jaconi.jwkscache;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +26,7 @@ class HealthReportListenerFactoryTest {
 
 	static {
 		try {
-			URL = new URL(URL_STRING);
+			URL = URI.create(URL_STRING).toURL();
 		} catch (MalformedURLException e) {
 			throw new RuntimeException(e);
 		}
