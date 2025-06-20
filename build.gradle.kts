@@ -34,6 +34,7 @@ repositories {
 }
 
 tasks.bootBuildImage {
+	createdDate = "now"
 	imageName = "ghcr.io/jaconi-io/${project.name}"
 }
 
