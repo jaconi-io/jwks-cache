@@ -10,7 +10,7 @@
           {
             "type": "build",
             "scope": "java",
-            "message": "bump com.nimbusds:nimbus-jose-jwt from * to *",
+            "message": "bump com.nimbusds:nimbus-jose-jwt *",
             "release": "patch"
           }
         ]
