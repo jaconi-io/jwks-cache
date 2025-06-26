@@ -1,16 +1,28 @@
 {
-    "branches": [
-        "main"
+  "branches": [
+    "main"
+  ],
+  "plugins": [
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "releaseRules": [
+          {
+            "type": "build",
+            "scope": "java",
+            "message": "bump com.nimbusds:nimbus-jose-jwt from * to *",
+            "release": "patch"
+          }
+        ]
+      }
     ],
-    "plugins": [
-        "@semantic-release/commit-analyzer",
-        "@semantic-release/release-notes-generator",
-        [
-            "@semantic-release/exec",
-            {
-                "publishCmd": "echo \"next-release-version=${nextRelease.version}\" > \"$GITHUB_OUTPUT\""
-            }
-        ],
-        "@semantic-release/github"
-    ]
+    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/exec",
+      {
+        "publishCmd": "echo \"next-release-version=${nextRelease.version}\" > \"$GITHUB_OUTPUT\""
+      }
+    ],
+    "@semantic-release/github"
+  ]
 }
