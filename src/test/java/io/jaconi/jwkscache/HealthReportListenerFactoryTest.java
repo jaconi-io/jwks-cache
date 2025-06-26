@@ -79,6 +79,7 @@ class HealthReportListenerFactoryTest {
 		var listener = healthReportListenerFactory.create(URL);
 
 		listener.notify(new HealthReport<>(jwksSource, HealthStatus.NOT_HEALTHY, 0, null));
+		listener.notify(new HealthReport<>(jwksSource, HealthStatus.NOT_HEALTHY, 0, null));
 		listener.notify(new HealthReport<>(jwksSource, HealthStatus.HEALTHY, 0, null));
 
 		var val = meterRegistry.get("jwks-cache.endpoints")
@@ -93,6 +94,7 @@ class HealthReportListenerFactoryTest {
 	void healthyToUnhealthy() {
 		var listener = healthReportListenerFactory.create(URL);
 
+		listener.notify(new HealthReport<>(jwksSource, HealthStatus.HEALTHY, 0, null));
 		listener.notify(new HealthReport<>(jwksSource, HealthStatus.HEALTHY, 0, null));
 		listener.notify(new HealthReport<>(jwksSource, HealthStatus.NOT_HEALTHY, 0, null));
 
