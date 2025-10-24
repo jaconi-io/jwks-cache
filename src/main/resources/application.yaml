@@ -26,10 +26,17 @@ management:
 
 jaconi:
   jwks:
+    caching:
+      # Caching should not be disabled in production!
+      enabled: true
+      time-to-live: 5m
     persistence:
       file:
         enabled: false
         path: /var/cache/jwks-cache
+    outage-tolerance:
+      enabled: true
+      time-to-live: 50m
     urls: []
 
 logging:
