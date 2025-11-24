@@ -1,7 +1,7 @@
 plugins {
 	java
 	jacoco
-	id("org.springframework.boot") version "3.5.7"
+	id("org.springframework.boot") version "4.0.0"
 	id("io.spring.dependency-management") version "1.1.7"
 	id("org.graalvm.buildtools.native") version "0.11.3"
 }
@@ -17,12 +17,12 @@ dependencies {
 	implementation("com.nimbusds:nimbus-jose-jwt:10.6")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
-	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-webmvc")
 
 	runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 
 	testImplementation("org.mock-server:mockserver-junit-jupiter:5.15.0")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
 }
 
 java {
@@ -46,16 +46,4 @@ tasks.jacocoTestReport {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
-}
-
-graalvmNative {
-	binaries {
-		names.forEach { binaryName ->
-			named(binaryName){
-				if (!setOf("x86_64", "amd64").contains(System.getProperty("os.arch"))) {
-					buildArgs.add("-Ob")
-				}
-			}
-		}
-	}
 }
