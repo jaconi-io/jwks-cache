@@ -12,12 +12,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.util.Resource;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+
+import tools.jackson.databind.json.JsonMapper;
 
 /**
  * A {@link PersistingResourceRetriever} using the filesystem as a storage backend.
@@ -27,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @ConditionalOnProperty("jaconi.jwks.persistence.file.enabled")
 public class FileResourceRetriever extends PersistingResourceRetriever {
-	private final ObjectMapper mapper;
+	private final JsonMapper mapper;
 
 	@Value("${jaconi.jwks.persistence.file.path}")
 	private final File path;

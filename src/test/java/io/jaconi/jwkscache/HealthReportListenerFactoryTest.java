@@ -8,9 +8,9 @@ import java.net.URL;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import com.nimbusds.jose.jwk.source.JWKSetSourceWithHealthStatusReporting;
 import com.nimbusds.jose.proc.SecurityContext;
@@ -38,7 +38,7 @@ class HealthReportListenerFactoryTest {
 	@Autowired
 	MeterRegistry meterRegistry;
 
-	@Mock
+	@MockitoBean
 	JWKSetSourceWithHealthStatusReporting<SecurityContext> jwksSource;
 
 	@BeforeEach

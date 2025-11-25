@@ -10,9 +10,8 @@ management:
     health:
       probes:
         # Expose Kubernetes probes as /livez and /readyz on the application port. See
-        # https://docs.spring.io/spring-boot/docs/3.1.3/reference/html/actuator.html#actuator.endpoints.kubernetes-probes
+        # https://docs.spring.io/spring-boot/4.0/reference/actuator/endpoints.html#actuator.endpoints.kubernetes-probes
         add-additional-paths: true
-        enabled: true
 
   endpoints:
     web:
@@ -42,3 +41,13 @@ jaconi:
 logging:
   level:
     root: INFO
+---
+spring:
+  config:
+    activate:
+      on-profile: json-logging
+
+logging:
+  structured:
+    format:
+      console: logstash

@@ -19,12 +19,16 @@ import org.mockserver.integration.ClientAndServer;
 import org.mockserver.junit.jupiter.MockServerExtension;
 import org.mockserver.model.Header;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.util.Resource;
+
+import tools.jackson.databind.json.JsonMapper;
 
 @ExtendWith(MockServerExtension.class)
 class FileResourceRetrieverTest {
-	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper().addMixIn(Resource.class, ResourceMixin.class);
+	private static final JsonMapper JSON_MAPPER = JsonMapper.builder()
+			.addMixIn(Resource.class, ResourceMixin.class)
+			.build();
+
 	private final ClientAndServer client;
 	private final URL url;
 
@@ -40,13 +44,13 @@ class FileResourceRetrieverTest {
 
 	@Test
 	void loadFromMissingFolder() {
-		var retriever = new FileResourceRetriever(OBJECT_MAPPER, new File("/does/not/exist"));
+		var retriever = new FileResourceRetriever(JSON_MAPPER, new File("/does/not/exist"));
 		assertThatThrownBy(() -> retriever.load(url)).isInstanceOf(FileNotFoundException.class);
 	}
 
 	@Test
 	void storeToMissingFolder() {
-		var retriever = new FileResourceRetriever(OBJECT_MAPPER, new File("/does/not/exist"));
+		var retriever = new FileResourceRetriever(JSON_MAPPER, new File("/does/not/exist"));
 		assertThatThrownBy(() -> retriever.store(url, new Resource("", null))).isInstanceOf(
 				FileNotFoundException.class);
 	}
@@ -56,7 +60,7 @@ class FileResourceRetrieverTest {
 		client.when(request().withMethod("GET"))
 				.respond(response().withHeader(Header.header("Content-Type", "foo")).withBody("{}"));
 
-		var retriever = new FileResourceRetriever(OBJECT_MAPPER, new File("/does/not/exist"));
+		var retriever = new FileResourceRetriever(JSON_MAPPER, new File("/does/not/exist"));
 		Resource resource = retriever.retrieveResource(url);
 		assertThat(resource.getContent()).isEqualTo("{}");
 		assertThat(resource.getContentType()).isEqualTo("foo");
@@ -67,7 +71,7 @@ class FileResourceRetrieverTest {
 		client.when(request().withMethod("GET"))
 				.respond(response().withStatusCode(404));
 
-		var retriever = new FileResourceRetriever(OBJECT_MAPPER, new File("/does/not/exist"));
+		var retriever = new FileResourceRetriever(JSON_MAPPER, new File("/does/not/exist"));
 		assertThatThrownBy(() -> retriever.retrieveResource(url)).isInstanceOf(IOException.class);
 	}
 
@@ -76,7 +80,7 @@ class FileResourceRetrieverTest {
 		client.when(request().withMethod("GET"))
 				.respond(response().withHeader(Header.header("Content-Type", "foo")).withBody("{}"));
 
-		var retriever = new FileResourceRetriever(OBJECT_MAPPER, new File("/tmp"));
+		var retriever = new FileResourceRetriever(JSON_MAPPER, new File("/tmp"));
 		Resource resource = retriever.retrieveResource(url);
 		assertThat(resource.getContent()).isEqualTo("{}");
 		assertThat(resource.getContentType()).isEqualTo("foo");
@@ -85,7 +89,7 @@ class FileResourceRetrieverTest {
 		client.when(request().withMethod("GET"))
 				.respond(response().withStatusCode(504));
 
-		retriever = new FileResourceRetriever(OBJECT_MAPPER, new File("/tmp"));
+		retriever = new FileResourceRetriever(JSON_MAPPER, new File("/tmp"));
 		resource = retriever.retrieveResource(url);
 		assertThat(resource.getContent()).isEqualTo("{}");
 		assertThat(resource.getContentType()).isEqualTo("foo");

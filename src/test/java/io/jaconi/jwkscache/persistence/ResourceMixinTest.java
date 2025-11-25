@@ -7,14 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.util.Resource;
+
+import tools.jackson.databind.json.JsonMapper;
 
 @SpringBootTest
 class ResourceMixinTest {
 
 	@Autowired
-	ObjectMapper objectMapper;
+	JsonMapper jsonMapper;
 
 	@Test
 	void testSerialization() throws JsonProcessingException {
@@ -25,7 +26,7 @@ class ResourceMixinTest {
 				  ]
 				}""";
 		var res = new Resource(content, "application/json");
-		var actual = objectMapper.writeValueAsString(res);
+		var actual = jsonMapper.writeValueAsString(res);
 		var expected = "{\"content\":" + content + ",\"contentType\":\"application/json\"}";
 		assertEquals(expected, actual);
 	}
@@ -41,7 +42,7 @@ class ResourceMixinTest {
 				  },
 				  "contentType": "application/json"
 				}""";
-		var actual = objectMapper.readValue(json, Resource.class);
+		var actual = jsonMapper.readValue(json, Resource.class);
 		var expected = new Resource("{\"keys\":[{\"kty\":\"RSA\"}]}", "application/json");
 		assertEquals(expected.getContentType(), actual.getContentType());
 		assertEquals(expected.getContent(), actual.getContent());
