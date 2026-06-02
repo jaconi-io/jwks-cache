@@ -2,9 +2,7 @@ package io.jaconi.jwkscache;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockserver.integration.ClientAndServer;
-import org.mockserver.junit.jupiter.MockServerExtension;
 import org.mockserver.junit.jupiter.MockServerSettings;
 import org.mockserver.model.HttpError;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 
-@ExtendWith(MockServerExtension.class)
 @MockServerSettings(ports = 8082)
 @SpringBootTest(properties = {
 		"jaconi.jwks.caching.enabled = true",
