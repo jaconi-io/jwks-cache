@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nimbusds.jose.util.Resource;
 
 import tools.jackson.databind.json.JsonMapper;
@@ -18,7 +17,7 @@ class ResourceMixinTest {
 	JsonMapper jsonMapper;
 
 	@Test
-	void testSerialization() throws JsonProcessingException {
+	void testSerialization() {
 		var content = """
 				{
 				  "keys": [
@@ -32,7 +31,7 @@ class ResourceMixinTest {
 	}
 
 	@Test
-	void testDeserialization() throws JsonProcessingException {
+	void testDeserialization() {
 		var json = """
 				{
 				  "content": {
