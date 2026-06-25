@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.nio.file.Files;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,10 +50,22 @@ class FileResourceRetrieverTest {
 	}
 
 	@Test
-	void storeToMissingFolder() {
+	void storeToMissingNonCreatableFolder() {
 		var retriever = new FileResourceRetriever(JSON_MAPPER, new File("/does/not/exist"));
 		assertThatThrownBy(() -> retriever.store(url, new Resource("", null))).isInstanceOf(
 				FileNotFoundException.class);
+	}
+
+	@Test
+	void storeToMissingCreatableFolder() throws IOException {
+		// Let the JVM create a temporary folder, such that we know it can be created.
+		var path = Files.createTempDirectory(null);
+
+		// Delete the folder so we know it does not exist.
+		Files.delete(path);
+
+		var retriever = new FileResourceRetriever(JSON_MAPPER, path.toFile());
+		retriever.store(url, new Resource("", null));
 	}
 
 	@Test
