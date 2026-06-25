@@ -15,6 +15,7 @@ dependencies {
 	compileOnly("org.projectlombok:lombok")
 
 	implementation("com.nimbusds:nimbus-jose-jwt:10.9.1")
+	implementation("io.kubernetes:client-java:26.0.0")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-webmvc")
@@ -23,6 +24,8 @@ dependencies {
 
 	testImplementation("org.mock-server:mockserver-junit-jupiter:7.1.0")
 	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
+	testImplementation("org.testcontainers:testcontainers-junit-jupiter")
+	testImplementation("org.testcontainers:testcontainers-k3s")
 
 	// Required by MockServer.
 	testRuntimeOnly("io.prometheus:prometheus-metrics-tracer-initializer")
