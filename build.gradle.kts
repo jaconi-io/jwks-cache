@@ -22,7 +22,7 @@ dependencies {
 
 	runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 
-	testImplementation("org.mock-server:mockserver-junit-jupiter:7.2.0")
+	testImplementation("org.mock-server:mockserver-junit-jupiter:7.4.0")
 	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
 	testImplementation("org.testcontainers:testcontainers-junit-jupiter")
 	testImplementation("org.testcontainers:testcontainers-k3s")
