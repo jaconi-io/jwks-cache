@@ -9,6 +9,9 @@ plugins {
 group = "io.jaconi"
 version = "0.0.1-SNAPSHOT"
 
+// Workaround incompatible versions between Spring Boot 4.1.1 and mockserver 9.0.0.
+extra["netty.version"] = "4.2.19.Final"
+
 dependencies {
 	annotationProcessor("org.projectlombok:lombok")
 
@@ -22,7 +25,7 @@ dependencies {
 
 	runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 
-	testImplementation("org.mock-server:mockserver-junit-jupiter:8.0.0")
+	testImplementation("org.mock-server:mockserver-junit-jupiter:9.0.0")
 	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
 	testImplementation("org.testcontainers:testcontainers-junit-jupiter")
 	testImplementation("org.testcontainers:testcontainers-k3s")
